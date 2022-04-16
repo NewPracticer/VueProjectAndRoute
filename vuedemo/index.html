@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>hello world</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id = "app">{{content}}</div>
+    <div >{{content}}</div>
+    <script>
+        //创建一个vue实例
+        //el代表负责的区域或者标签
+        var app = new Vue({
+            el:'#app',
+            data:{
+                content:"hello world1"
+            }
+            
+        })
+        //两秒后更改内容
+        setTimeout(function(){
+            app.$data.content = 'bye world'
+        },2000)
+    </script>
+</body>
+
+</html>
