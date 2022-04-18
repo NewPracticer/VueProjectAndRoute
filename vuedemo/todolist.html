@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>hello world</title>
+    <title>自定义组件及父子组件传值</title>
     <script src="./vue.js"></script>
 </head>
 <body>
@@ -10,25 +10,58 @@
         <input type="text" v-model = 'inputValue'/>
         <button v-on:click = 'handleBtnClick'>提交</button>
         <ul>
-            <li v-for = 'item in list'>{{item}}</li>
+            <li v-for = 'item in firstlist'>{{item}}</li>
         </ul>
+        <!--自定义组件-->
+        <todo-item 
+            v-bind:content="item" 
+            v-for="(item,index) in seclist" 
+            @delete = "handleItemDelete(index)" >
+        </todo-item>
     </div>
 
     <script>
+        
+        //全局自定义组件
+        // Vue.component("TodoItem",{
+        //     props: ['content'],
+        //     template:"<li>{{content}}</li>"
+        // })
+        // 单Vue的自定义组件
+        var TodoItem = {
+            //子组件接收父组件的值
+            props:['content'],
+            template:"<li @click='handleItemClick'>{{content}}</li>",
+            methods: {
+                handleItemClick: function(){
+                    //子组件往父组件传值
+                    this.$emit("delete")
+                }
+            }
+        }
         var app = new Vue({
             el:'#app',
+            components:{
+                TodoItem
+            },
             data:{
-                list:['第一课的内容','第二课的内容','333'],
+                firstlist:['111','222','333'],
+                seclist:['444','555','666'],
                 inputValue:''
             },
             methods:{
                 handleBtnClick:function(){
                     // alert(this.inputValue)
-                    this.list.push(this.inputValue)
+                    this.firstlist.push(this.inputValue)
                     this.inputValue = ''
+                },
+                handleItemDelete:function(index){
+                    console.log(index)
+                    this.seclist.splice(index,1)
                 }
             }
         })
+        
     </script>
 </body>
 
