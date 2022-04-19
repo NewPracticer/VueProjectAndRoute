@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模板语法、计算属性、方法、侦听器、样式绑定、条件渲染</title>
+    <style>
+        .activated{
+            color:red
+        }
+        .activatedArray{
+            color:red
+        }
+    </style>
+</head>
+<body>
+    <div id = "app">
+        <!-- 模板语法 -->
+        {{name + ' L'}}
+        <div v-text="name + ' L'"></div>
+        <div v-html="name + ' L'"></div>
+        <!-- 计算属性 侦听器 方法  -->
+        {{firstName + " " + lastName}}
+        <div>
+        {{fullName + " " +age}}
+        </div>
+        <!-- Vue中的样式绑定-->
+        <div>
+            <!--样式的对象绑定-->
+            <div  @click = "handleDivClick" :class ="{activated:isActivated}">
+                Hello world
+            </div>
+            <!--样式的数组绑定-->
+             <div  @click = "handleDivClick2" :class ="[activatedArray]">
+                Hello world Array
+            </div>
+            <!-- 样式的对象设置  -->
+            <div :style="styleObj" @click="handleDivClick3">
+                Hello world Style
+            </div>
+        </div>
+        <!--条件渲染-->
+        <div>
+            <div v-if="show">条件渲染 v-if</div>
+            <div v-show="show">条件渲染 v-show</div>
+            <div v-else> v-else</div>
+
+            <div v-if = "showdiv === 'a'">This is A</div>
+            <div v-else-if="showdiv ==='b'">This is B</div>
+            <div v-else> This is C</div>
+        </div>
+    </div>
+    
+    <script src="./vue.js"></script>
+    <script>
+        
+        
+        var app = new Vue({
+            el:'#app',
+            data:{
+                name:"<hl>SKY</h1>",
+                firstName:"SEC_SKY",
+                lastName:"SEC_L",
+                // fullName:'Computed And Watch',
+                age:33,
+                isActivated:false,
+                activatedArray:"",
+                styleObj:{
+                    color:"pink"
+                },
+                show:true,
+                showdiv:"a"
+            },
+            // watch:{
+            //     //观察属性
+            //     firstName:function () {
+            //         this.fullName = this.firstName + " "+this.lastName;
+            //     },
+            //     lastName:function(){
+            //         this.fullName = this.firstName + " "+this.lastName;
+            //     },
+            // },
+            computed:{
+                //计算属性
+                // fullName:function () {
+                //     console.log("计算了一次");
+                //     return "Computed计算: "+this.firstName +" " +this.lastName
+                // }
+                fullName:{
+                    get:function () {
+                        return this.firstName + " " +this.lastName
+                    },
+                    set:function (value) {
+                        console.log(value);
+                        var arr = value.split(" ");
+                        this.firstName = arr[0];
+                        this.lastName = arr[1];
+                        console.log(value);
+                    }
+                }
+            },
+            methods:{
+                // fullName:function () {
+                //     console.log("计算了一次");
+                //     return "Computed计算: "+this.firstName +" " +this.lastName
+                // }
+                handleDivClick:function () {
+                    this.isActivated = !this.isActivated
+                },
+                handleDivClick2:function () {
+                    this.activatedArray = this.activatedArray === "activatedArray"?"":"activatedArray"
+                },
+                handleDivClick3:function () {
+                    this.styleObj.color = this.styleObj.color==="pink"?"red":"pink";
+                },
+            }
+        })
+        
+    </script>
+</body>
+
+</html>
