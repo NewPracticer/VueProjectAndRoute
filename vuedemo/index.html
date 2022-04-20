@@ -9,7 +9,7 @@
 <body>
     <div id = "app">{{content}}</div>
     <div >{{content}}</div>
-    <todo-item></todo-item>
+    
     <script>
         //Vue 遵循MVVM 设计模式  
         // model负责 网络请求 请求数据 保存数据 
@@ -17,9 +17,7 @@
         // vm层 由Vue负责 其中包括 dom listeners 和 databindings
         //创建一个vue实例
         //el代表负责的区域或者标签
-        Vue.component("TodoItem",{
-            template:"<li>todo item</li>"
-        })
+        
         var app = new Vue({
             el:'#app',
             data:{

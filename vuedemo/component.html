@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>组件使用的细节点</title>
+    <script src="./vue.js"></script> 
+</head>
+<body>
+    <div id = "app">
+        <div>1、-----使用is属性来解决自定义组件与ES5规范之间的问题</div>
+        <table>
+            <ul>
+                <li is='row'></li>
+            </ul>
+            <select>
+                <option is="row"></option>
+            </select>
+            <tbody>
+                <tr><td>1</td></tr>
+                <tr><td>2</td></tr>
+                <tr><td>3</td></tr>
+                <tr is ='row'></tr>
+            </tbody>
+        </table>
+        <div>2、-----子组件定义data的时候必须使用函数返回值</div>
+        <!--保证每个子组件有独立的存储-->
+        <table>
+            <tbody>
+                <tr><td>1</td></tr>
+                <tr><td>2</td></tr>
+                <tr><td>3</td></tr>
+                <tr is ='row'></tr>
+            </tbody>
+        </table>
+        <div>3、-----vue中的ref、获取dom节点及操作dom</div>
+        <div ref='hello' @click="handleClick">
+            vue中的ref、获取dom节点及操作dom
+        </div>
+        <div>----------计数器及计算总数</div>
+        <counter ref='one' @change='handleChange'></counter>
+        <counter ref='two' @change='handleChange'></counter>
+        <div>总数：{{total}}</div>
+
+        <div>4、-----父子组件传值</div>
+        <!--父组件通过属性向子组件传递数据,但子组件不能修改传来的数据-->
+        <counter2 :count ="1" @inc= "handleIncrease"></counter2>
+        <counter2 :count = "2" @inc= "handleIncrease"></counter2>
+        <div>{{total2}}</div>
+
+        <div>5、-----组件参数校验</div>
+        <child :content="1"></child>
+
+        <div>6、-----给组件绑定原生事件</div>
+        <childnative @click.native="handlechildsetClick"></childnative>
+        
+        <div>7、-----非父子组件传值(Bus/发布订阅模式/观察者模式)</div>
+        <childpublish content="SKY"></childpublish>
+        <childpublish content="LLL"></childpublish>
+
+        <div>8、-----Vue中的插槽</div>
+        <childslot>
+            <!-- <p>SKYLLL</p>> -->
+        </childslot>
+        <div>8.1、----------Vue中的具名插槽</div>
+        <childnameslot>
+            <div  slot="header">header</div>
+            <div slot="footer">footer</div>
+        </childnameslot>
+        <childslotscope>
+            <template slot-scope="props"> 
+                <h1>{{props.item}}</h1>
+            </template>
+        </childslotscope>
+        <div>9、-----动态组件与v-once指令</div>
+        <componet :is="type"></componet>
+        <child-one v-if="type === 'child-one'"></child-one>
+        <child-two v-if="type === 'child-two'"></child-two>
+        <button @click="handleChangeStateClick"></button>
+    </div>
+    
+    
+    <script>
+        Vue.prototype.bus = new Vue()
+        
+        Vue.component('child-one',{
+            template:'<div>child-one</div>'
+        })
+        Vue.component('child-two',{
+            template:'<div>child-two</div>'
+        })
+        Vue.component('childslotscope',{
+            data:function(){
+                return {
+                    list:[1,2,3,4]
+                }
+            },
+            template:`<div>
+                <ul><slot v-for="item of list" :item = item></slot>
+                    </ul>
+                </div>`
+        })
+        Vue.component('childnameslot',{
+            template:'<div><slot name="header"></slot><div class="content">content</div><slot name="footer"></slot></div>'
+        })
+
+        Vue.component('childslot',{
+            template:'<div><p>Hello</p><slot>默认内容</slot></div>'
+        })
+        Vue.component('childpublish',{
+            data:function(){
+                return {
+                    selfcontent:this.content
+                }
+            },
+            props:{
+                content:String
+            },
+            template:'<div @click="handleClick">{{selfcontent}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.bus.$emit('change',this.selfcontent)
+                }
+            },
+            mounted: function(){
+                var this_ = this
+                this.bus.$on('change',function(msg){
+                    this_.selfcontent = msg
+                })
+            }
+        })
+        Vue.component('childnative',{
+            template:'<div>Child2222</div>',
+        })
+        Vue.component('child',{
+            props:{
+                content:{
+                    type:[String,Number],
+                    required:false,
+                    default:'default value',
+                    // validator:function(value){
+                    //     return (value.length)>5
+                    // }
+                }
+            },
+            template:'<div>{{content}}</div>'
+        })
+
+        var counter2= {
+            props:['count'],
+            data:function(){
+                return{
+                    number :this.count,
+                }
+            },
+            template:'<div @click="handleClick">{{number}}</div>',
+            methods:{
+                handleClick:function(){
+                    this.number+=2
+                    this.$emit('inc',2)
+                }
+            }
+        }
+
+        Vue.component('counter',{
+            data:function(){
+                return {
+                    number:0
+                }
+            },
+            template:'<div @click=handleItemClick>{{number}}</div>',
+            methods:{
+                handleItemClick:function(){
+                    this.number++,
+                    this.$emit('change')
+                }
+            }
+        })
+        Vue.component('row',{
+            data:function(){
+                return {content:"this is a row"
+                }   
+            },
+            template:'<tr><td>{{content}}</td></tr>'
+        })
+        
+        var app = new Vue({
+            el:'#app',
+            data:{
+                total:0,
+                total2:3,
+                type:''    
+            },
+            components:{
+                counter2:counter2
+            },
+            methods:{
+                handleClick:function(){
+                    console.log(this.$refs.hello)
+                },
+                handleChange:function(){
+                    console.log(this.$refs.one.number)
+                    console.log(this.$refs.two.number)
+                    this.total = this.$refs.one.number + this.$refs.two.number
+                },
+                handleIncrease:function(step){
+                    this.total2 += step
+                },
+                handlechildsetClick:function(){
+                    alert("点击事件")
+                },
+                handleChangeStateClick:function(){
+                    this.type = (this.type ==='child-one'?'child-two':'child-one')
+                }
+            }
+            
+        })
+        
+    </script>
+</body>
+
+</html>

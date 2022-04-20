@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>模板语法、计算属性、方法、侦听器、样式绑定、条件渲染</title>
+    <title>模板语法、计算属性、方法、侦听器、样式绑定、条件渲染、列表渲染</title>
     <style>
         .activated{
             color:red
@@ -15,45 +15,77 @@
 <body>
     <div id = "app">
         <!-- 模板语法 -->
+        <div>------------------------模板语法</div>
         {{name + ' L'}}
         <div v-text="name + ' L'"></div>
         <div v-html="name + ' L'"></div>
         <!-- 计算属性 侦听器 方法  -->
+        <div>------------------------计算属性 侦听器 方法</div>
         {{firstName + " " + lastName}}
         <div>
         {{fullName + " " +age}}
         </div>
         <!-- Vue中的样式绑定-->
         <div>
+            <div>------------------------样式的对象绑定</div>
             <!--样式的对象绑定-->
             <div  @click = "handleDivClick" :class ="{activated:isActivated}">
                 Hello world
             </div>
+            <div>------------------------样式的数组绑定</div>
             <!--样式的数组绑定-->
              <div  @click = "handleDivClick2" :class ="[activatedArray]">
                 Hello world Array
             </div>
+            <div>------------------------样式的对象设置</div>
             <!-- 样式的对象设置  -->
             <div :style="styleObj" @click="handleDivClick3">
                 Hello world Style
             </div>
         </div>
         <!--条件渲染-->
+        <div>------------------------条件渲染</div>
         <div>
-            <div v-if="show">条件渲染 v-if</div>
             <div v-show="show">条件渲染 v-show</div>
+            <div v-if="show">条件渲染 v-if</div>
             <div v-else> v-else</div>
 
             <div v-if = "showdiv === 'a'">This is A</div>
             <div v-else-if="showdiv ==='b'">This is B</div>
             <div v-else> This is C</div>
         </div>
+        <div>------------------------列表循环</div>
+        <!--列表循环-->
+        <div v-for="(item,index) in list" 
+             :key = "item.id">{{item.text}}----{{index}}</div>
+        <div>------------------------模板占位符</div>
+        <!--模板占位符-->
+        <template v-for="(item,index) of list">
+            <div>
+                {{item.text}} ---- {{index}}
+            </div>
+            <span>
+                {{item.text}}
+            </span>
+        </template>
+        <div>------------------------对象属性遍历</div>
+        <!--对象属性遍历-->
+        <div v-for="(item,key,index) in userinfo">{{item}}---{{key}}---{{index}}</div>
+        <!--Vue中的set方法-->
+        <div>------------------------Vue中的set方法</div>
+        <!--Vue.set(app.userinfo,'address','beijing')-->
+        <!--app.$set(app.userinfo,'kangxi','laile')-->
+        <!--Vue.set(app.listArray,1,10)-->
+        <!--app.set(app.listArray,3,10)-->
+        <div v-for="item in listArray">
+            {{item}}
+        </div>
     </div>
     
     <script src="./vue.js"></script>
     <script>
-        
-        
+        // 对于数组的操作:push pop shift unshift splice sort reverse
+        // 改变数组的引用
         var app = new Vue({
             el:'#app',
             data:{
@@ -68,7 +100,25 @@
                     color:"pink"
                 },
                 show:true,
-                showdiv:"a"
+                showdiv:"a",
+                list:["hello",
+                    "SKY",
+                    "L",
+                    "This",
+                    "is",
+                    "NIGHT",
+                    {id:"0101001",text:"good"},
+                    {id:"0101002",text:"bye"},
+                    {id:"0101003",text:"ssss"},
+                ],
+                userinfo:{
+                    name:"Dell",
+                    age:28,
+                    gender:"male",
+                    salary:"secret"
+                },
+                listArray:[1,2,3,4,5]
+
             },
             // watch:{
             //     //观察属性
