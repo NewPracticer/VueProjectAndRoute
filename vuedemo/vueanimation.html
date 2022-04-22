@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中CSS动画原理</title>
+    <script src="./vue.js"></script>
+    <link
+    rel="stylesheet" type="text/css"
+    href="./animate.css"
+  />
+    <style>
+        .fade-enter{
+            opacity: 0;
+        }
+        .fade-enter-active{
+            transition: opacity 3s;
+        }
+        .fade-leave-to{
+            opacity: 0;
+        }
+        .fade-leave-active{
+            transition: opacity 3s;
+        }
+        @keyframes bounce-in {
+            0%{
+                transform: scale(0);
+            }
+            50%{
+                transform: scale(1.5);
+            }
+            100%{
+                transform: scale(1);
+            }
+        }
+        .keyfram-enter-active{
+            animation: bounce-in 1s;
+            transform-origin: left center;
+        }
+        .keyfram-leave-active{
+            animation: bounce-in 1s reverse;
+            transform-origin: left center;
+        }
+        .v-enter,.v-leave-to{
+            opacity: 0;
+        }
+        .v-enter-active,.v-leave-active{
+            transition:  opacity 1s;
+        }
+    </style>
+</head>
+<body>
+    <div id = "app">
+        <div>---------普通动画</div>
+        <transition name ="fade">
+            <div v-if="show">SKY LLL</div>
+        </transition>
+        <div>---------keyFrame动画</div>
+        <transition name ="keyfram">
+            <div v-if="show">KeyFrame 动画</div>
+        </transition>
+        <div>---------animated动画</div>
+        <transition
+            name = "fade1"
+            appear
+            enter-activt-class = "animated swing fade1-enter-active"
+            leave-active-class = "animated shake fade1-leave-active"
+            appear-active-class= "animated swing">
+            <div v-show="show">Animated 动画</div>
+        </transition>
+        <button @click="handleClick">切换</button>
+        <div>---------列表d动画</div>
+        <transition-group>
+            <div v-for="item of list" :key="item.id">
+                {{item.title}}
+            </div>
+        </transition-group>
+        <button @click="handleBtnClick">添加</button>
+    </div>
+
+    
+    <script>
+        var count = 0;
+        var app = new Vue({
+            el:'#app',
+            data:{
+                show:true,
+                list:[]
+            },
+            methods:{
+                handleClick:function(){
+                    this.show =!this.show
+                },
+                handleBtnClick:function(){
+                    this.list.push({
+                        id:count++,
+                        title:"SKYLL"
+                    })
+                }
+            }
+        })
+        
+    </script>
+</body>
+
+</html>

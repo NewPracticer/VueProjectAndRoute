@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Vue中的事件处理</title>
+    <script src="./vue.js"></script>
+    
+</head>
+<body>
+    <div id = "app">
+        <button @click="handleClick($event,1,2,3)">Button</button>
+        <div>---------监听点击事件</div>
+        <form action="/abc" @click.prevent>
+            <input type="submit"/>
+        </form>
+        <form action="/abc" @click.stop>
+            <input type="submit"/>
+        </form>
+        <form action="/abc" @click.self>
+            <input type="submit"/>
+        </form>
+        <div @click.self="handleSelfClick">
+            nice
+            <div>hello world</div>
+        </div>
+        <div>---------监听内外部点击事件</div>
+        <div @click.capture= "handleOuterClick">
+            <div @click.capture="handleInnerClick">hello world</div>
+        </div>
+        <div>---------监听输入</div>
+        <div>
+            <!--keydown后可以跟enter,ctrl,meta,right,middle-->
+            <input @keydown= "handleKeyDown"/>
+        </div>
+        <div>---------表单绑定</div>
+        <textarea v-model = "value"></textarea>
+        {{value}}
+        <!-- <checkbox v-model="value"/>
+        {{value}} -->
+        <!--https://vuejs.bootcss.com/guide/forms.html-->
+    </div>
+    
+    
+    <script>
+        //self要求，click事件只有在e.target = e.currentTarget的时候才会执行
+        var app = new Vue({
+            el:'#app',
+            data:{
+                content:"hello world1",
+                value:""
+            },
+            methods:{
+                handleClick:function(e,one,two,three){
+                    console.log(e,one,two,three)
+                },
+                handleSelfClick:function(){
+                    alert(123)
+                },
+                handleOuterClick:function(){
+                    alert("outer")
+                },
+                handleInnerClick:function(){
+                    alert("inner")
+                },
+                handleKeyDown:function(e){
+                    console.log(e.target.value)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
