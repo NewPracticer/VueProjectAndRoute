@@ -14,8 +14,7 @@ export default{
   data () {
     return {
       swiperOption: {
-        pagination: '.swiper-pagination',
-        loop: true
+        pagination: '.swiper-pagination'
       },
       swiperList: [
         {id: '0001', imgUrl: 'http://img1.qunarzz.com/piao/fusion/1801/1a/94428c6dea109402.jpg_640x200_2cf590d8.jpg'},
