@@ -7,11 +7,11 @@
 <!--多页面应用 缺点：首屏时间稍慢，SEO差 -->
 <template>
   <div>
-      <home-header :city="city">header</home-header>
-      <home-swiper :list="swiperList"></home-swiper>
-      <home-icons :list="iconList"></home-icons>
-      <home-recommend :list="recommendList"></home-recommend>
-      <home-weekend :list="weekendList"></home-weekend>
+      <home-header v-bind:city="city">header</home-header>
+      <home-swiper v-bind:list="swiperList"></home-swiper>
+      <home-icons v-bind:list="iconList"></home-icons>
+      <home-recommend v-bind:list="recommendList"></home-recommend>
+      <home-weekend v-bind:list="weekendList"></home-weekend>
   </div>
 </template>
 <script>
