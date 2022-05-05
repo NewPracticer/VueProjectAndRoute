@@ -17,10 +17,12 @@
 </template>
 
 <script>
+// mapstate 将 vuex的city属性 映射到每个组件的computed属性上
+import { mapState } from 'vuex'
 export default {
   name: 'HomeHeader',
-  props: {
-    city: String
+  computed: {
+    ...mapState(['city'])
   }
 }
 </script>
@@ -50,7 +52,7 @@ export default {
       color: #ccc
     .header-right
       color: #fff
-      width 1.24rem
+      min-width 1.04rem
       float: right
       text-align: center
       .arrow-icon
