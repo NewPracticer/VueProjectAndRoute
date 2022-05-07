@@ -42,7 +42,6 @@ export default {
     },
     handleLetterChange (e) {
       this.letter = e
-      console.log('触发字母', e)
     }
   },
   mounted () {
