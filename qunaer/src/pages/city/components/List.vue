@@ -54,7 +54,6 @@ export default {
   },
   watch: {
     letter () {
-      console.log('观察字母', this.letter)
       if (this.letter) {
         const element = this.$refs[this.letter][0]
         this.scroll.scrollToElement(element)
