@@ -1,4 +1,6 @@
 <template>
+  <!--自定义轮播组件-->
+  <!--使用better-scroll实现-->
   <div class="slider" ref="slider">
     <div class="slider-group" ref="sliderGroup">
       <slot>
@@ -33,13 +35,17 @@
     data() {
       return {
         dots: [],
+        // 表示当前是第几页
         currentPageIndex: 0
       }
     },
     mounted() {
       setTimeout(() => {
+        // 计算并设置slider宽度
         this._setSliderWidth()
+        // 初始化下方的点 
         this._initDots()
+        // 初始化slider
         this._initSlider()
 
         if (this.autoPlay) {
@@ -89,22 +95,26 @@
         }
       },
       _setSliderWidth(isResize) {
+        // 获取到当前slider的子元素
         this.children = this.$refs.sliderGroup.children
 
         let width = 0
         let sliderWidth = this.$refs.slider.clientWidth
         for (let i = 0; i < this.children.length; i++) {
           let child = this.children[i]
+          // 给每一个class设置一个样式 
           addClass(child, 'slider-item')
-
+          // 设置每一个child的宽度就是父容器的宽度
           child.style.width = sliderWidth + 'px'
           width += sliderWidth
         }
+        // 如果是可以循环，就相当克隆两倍容器
         if (this.loop && !isResize) {
           width += 2 * sliderWidth
         }
         this.$refs.sliderGroup.style.width = width + 'px'
       },
+      // 初始化slider的属性 
       _initSlider() {
         this.slider = new BScroll(this.$refs.slider, {
           scrollX: true,
@@ -116,7 +126,7 @@
             speed: 400
           }
         })
-
+        // 监听当滑动到最后时
         this.slider.on('scrollEnd', this._onScrollEnd)
 
         this.slider.on('touchend', () => {
@@ -132,6 +142,7 @@
         })
       },
       _onScrollEnd() {
+        // 当前的页面
         let pageIndex = this.slider.getCurrentPage().pageX
         this.currentPageIndex = pageIndex
         if (this.autoPlay) {

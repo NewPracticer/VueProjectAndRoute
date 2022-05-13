@@ -1,7 +1,9 @@
+// 判断dom对象是否有class
 export function hasClass(el, className) {
   return el.classList.contains(className)
 }
 
+// 给dom对象添加class
 export function addClass(el, className) {
   el.classList.add(className)
 }

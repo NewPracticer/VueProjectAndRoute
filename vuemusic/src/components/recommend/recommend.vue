@@ -2,6 +2,7 @@
   <div class="recommend" ref="recommend">
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
+        <!--v-if="recommends.length" 保证当获取数据后,再加载slider组件-->
         <div v-if="recommends.length" class="slider-wrapper">
           <div class="slider-content">
             <slider ref="slider">
@@ -21,6 +22,7 @@
                 <img width="60" height="60" v-lazy="item.imgurl">
               </div>
               <div class="text">
+                <!-- v-html 转义字符-->
                 <h2 class="name" v-html="item.creator.name"></h2>
                 <p class="desc" v-html="item.dissname"></p>
               </div>
@@ -54,6 +56,7 @@
       }
     },
     created() {
+      // 获取推荐轮播图
       this._getRecommend()
 
       this._getDiscList()
