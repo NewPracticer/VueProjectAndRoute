@@ -3,6 +3,7 @@
     <m-header></m-header>
     <tab></tab>
     <keep-alive>
+      <!-- 将接收到的数据保存到dom -->
       <router-view></router-view>
     </keep-alive>
     <player></player>

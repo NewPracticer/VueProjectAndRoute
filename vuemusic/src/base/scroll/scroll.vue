@@ -5,8 +5,9 @@
 </template>
 
 <script type="text/ecmascript-6">
+  // 使用BScroll组件构建自己的滑动组件
   import BScroll from 'better-scroll'
-
+  
   const DIRECTION_H = 'horizontal'
   const DIRECTION_V = 'vertical'
 
@@ -47,6 +48,7 @@
     },
     mounted() {
       setTimeout(() => {
+        // 初始化滑动组件
         this._initScroll()
       }, 20)
     },
@@ -62,6 +64,7 @@
         })
 
         if (this.listenScroll) {
+          // 滑动时 监听位置，并将数据发送到父组件中
           this.scroll.on('scroll', (pos) => {
             this.$emit('scroll', pos)
           })
@@ -87,17 +90,21 @@
       enable() {
         this.scroll && this.scroll.enable()
       },
+      //刷新
       refresh() {
         this.scroll && this.scroll.refresh()
       },
+      // 滑动到
       scrollTo() {
         this.scroll && this.scroll.scrollTo.apply(this.scroll, arguments)
       },
+      // 滑动到固定组件
       scrollToElement() {
         this.scroll && this.scroll.scrollToElement.apply(this.scroll, arguments)
       }
     },
     watch: {
+      // watch 为scroll 增加一个 data属性
       data() {
         setTimeout(() => {
           this.refresh()

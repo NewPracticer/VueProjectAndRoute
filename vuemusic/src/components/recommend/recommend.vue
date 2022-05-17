@@ -1,5 +1,6 @@
 <template>
   <div class="recommend" ref="recommend">
+    <!-- scroll组件data属性绑定disclist数据，当disclist数据发生变化时，watch的data属性也会触发-->
     <scroll ref="scroll" class="recommend-content" :data="discList">
       <div>
         <!--v-if="recommends.length" 保证当获取数据后,再加载slider组件-->
@@ -73,6 +74,8 @@
         this.$refs.recommend.style.bottom = bottom
         this.$refs.scroll.refresh()
       },
+      // 加载图片方法
+      // 事件会在页面或图像加载完成后立即发生
       loadImage() {
         if (!this.checkloaded) {
           this.checkloaded = true

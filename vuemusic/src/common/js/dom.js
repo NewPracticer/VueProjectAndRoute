@@ -8,6 +8,7 @@ export function addClass(el, className) {
   el.classList.add(className)
 }
 
+// 获取某个el的属性
 export function getData(el, name, val) {
   const prefix = 'data-'
   if (val) {

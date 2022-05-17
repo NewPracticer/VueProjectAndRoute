@@ -6,6 +6,7 @@
           class="listview"
           ref="listview">
     <ul>
+      <!--  -->
       <li v-for="group in data" class="list-group" ref="listGroup">
         <h2 class="list-group-title">{{group.title}}</h2>
         <uL>
@@ -16,17 +17,21 @@
         </uL>
       </li>
     </ul>
+    <!--右侧字母列表-->
     <div class="list-shortcut" @touchstart.stop.prevent="onShortcutTouchStart" @touchmove.stop.prevent="onShortcutTouchMove"
          @touchend.stop>
       <ul>
+        <!-- 将index属性 绑定到 data-index-->
         <li v-for="(item, index) in shortcutList" :data-index="index" class="item"
             :class="{'current':currentIndex===index}">{{item}}
         </li>
       </ul>
     </div>
+    <!-- 固定标题 -->
     <div class="list-fixed" ref="fixed" v-show="fixedTitle">
       <div class="fixed-title">{{fixedTitle}} </div>
     </div>
+    <!-- 加载器 -->
     <div v-show="!data.length" class="loading-container">
       <loading></loading>
     </div>
@@ -49,6 +54,7 @@
       }
     },
     computed: {
+      // 根据传来的数据来计算
       shortcutList() {
         return this.data.map((group) => {
           return group.title.substr(0, 1)
@@ -70,6 +76,7 @@
     },
     created() {
       this.probeType = 3
+      // 监听滑动
       this.listenScroll = true
       this.touch = {}
       this.listHeight = []
@@ -78,6 +85,7 @@
       selectItem(item) {
         this.$emit('select', item)
       },
+      // 开始点击
       onShortcutTouchStart(e) {
         let anchorIndex = getData(e.target, 'index')
         let firstTouch = e.touches[0]
@@ -86,9 +94,12 @@
 
         this._scrollTo(anchorIndex)
       },
+      // 开始移动
       onShortcutTouchMove(e) {
         let firstTouch = e.touches[0]
+        // 移动开始时的y坐标
         this.touch.y2 = firstTouch.pageY
+        // 两次移动时的Y坐标差值
         let delta = (this.touch.y2 - this.touch.y1) / ANCHOR_HEIGHT | 0
         let anchorIndex = parseInt(this.touch.anchorIndex) + delta
 
@@ -97,9 +108,11 @@
       refresh() {
         this.$refs.listview.refresh()
       },
+      // 获取子组件传递过来的滑动的Y值
       scroll(pos) {
         this.scrollY = pos.y
       },
+      // 计算高度
       _calculateHeight() {
         this.listHeight = []
         const list = this.$refs.listGroup
@@ -129,7 +142,8 @@
         setTimeout(() => {
           this._calculateHeight()
         }, 20)
-      },
+      }, 
+      // 监听 scrollY 属性
       scrollY(newY) {
         const listHeight = this.listHeight
         // 当滚动到顶部，newY>0

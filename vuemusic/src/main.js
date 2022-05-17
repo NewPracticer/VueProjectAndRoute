@@ -1,3 +1,4 @@
+// polyfill 指的是“用于实现浏览器不支持原生功能的代码”
 import 'babel-polyfill'
 import 'common/js/hack'
 import Vue from 'vue'
@@ -16,8 +17,11 @@ import 'common/stylus/index.styl'
 /* eslint-disable no-unused-vars */
 // import vConsole from 'vconsole'
 
+// 引入快速点击框架,解决延迟300ms的问题
 fastclick.attach(document.body)
 
+// 使用懒加载框架
+// 默认图片为default.png
 Vue.use(VueLazyload, {
   loading: require('common/image/default.png')
 })

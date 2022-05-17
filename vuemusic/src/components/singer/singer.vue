@@ -12,7 +12,7 @@
   import Singer from 'common/js/singer'
   import {mapMutations} from 'vuex'
   import {playlistMixin} from 'common/js/mixin'
-
+  // 设置热门，以及热门歌手数量
   const HOT_SINGER_LEN = 10
   const HOT_NAME = '热门'
 
@@ -38,6 +38,7 @@
         })
         this.setSinger(singer)
       },
+      // 获取歌手列表
       _getSingerList() {
         getSingerList().then((res) => {
           if (res.code === ERR_OK) {
@@ -52,6 +53,7 @@
             items: []
           }
         }
+        // 循环处理数据
         list.forEach((item, index) => {
           if (index < HOT_SINGER_LEN) {
             map.hot.items.push(new Singer({
