@@ -82,6 +82,7 @@
       this.listHeight = []
     },
     methods: {
+      // 当点击当前事件
       selectItem(item) {
         this.$emit('select', item)
       },
@@ -157,6 +158,7 @@
           let height2 = listHeight[i + 1]
           if (-newY >= height1 && -newY < height2) {
             this.currentIndex = i
+            // 计算diff的大小
             this.diff = height2 + newY
             return
           }
@@ -164,6 +166,8 @@
         // 当滚动到底部，且-newY大于最后一个元素的上限
         this.currentIndex = listHeight.length - 2
       },
+      // 当diff属性变化时
+      // 滚动到一半时, 将固定的title代替原来的title
       diff(newVal) {
         let fixedTop = (newVal > 0 && newVal < TITLE_HEIGHT) ? newVal - TITLE_HEIGHT : 0
         if (this.fixedTop === fixedTop) {

@@ -1,4 +1,5 @@
 <template>
+  <!-- 转场动画 -->
   <transition name="slide">
     <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
   </transition>
@@ -9,6 +10,7 @@
   import { getSingerDetail } from 'api/singer'
   import { ERR_OK } from 'api/config'
   import { createSong, isValidMusic, processSongsUrl } from 'common/js/song'
+  // 取数据的语法糖
   import { mapGetters } from 'vuex'
 
   export default {

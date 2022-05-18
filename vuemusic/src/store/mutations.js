@@ -1,5 +1,5 @@
 import * as types from './mutation-types'
-
+// 定义mutation的操作
 const mutations = {
   [types.SET_SINGER](state, singer) {
     state.singer = singer

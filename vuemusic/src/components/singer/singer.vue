@@ -1,5 +1,6 @@
 <template>
   <div class="singer" ref="singer">
+    <!-- 父组件接收子组件的数据 -->
     <list-view @select="selectSinger" :data="singers" ref="list"></list-view>
     <router-view></router-view>
   </div>
@@ -10,6 +11,7 @@
   import {getSingerList} from 'api/singer'
   import {ERR_OK} from 'api/config'
   import Singer from 'common/js/singer'
+  // vuex 提供的存储方法
   import {mapMutations} from 'vuex'
   import {playlistMixin} from 'common/js/mixin'
   // 设置热门，以及热门歌手数量
@@ -32,10 +34,13 @@
         this.$refs.singer.style.bottom = bottom
         this.$refs.list.refresh()
       },
+      // 
       selectSinger(singer) {
+        // 跳转到歌手详情页面
         this.$router.push({
           path: `/singer/${singer.id}`
         })
+        // 将singer保存到vuex
         this.setSinger(singer)
       },
       // 获取歌手列表
@@ -89,6 +94,7 @@
         })
         return hot.concat(ret)
       },
+      // 进行映射
       ...mapMutations({
         setSinger: 'SET_SINGER'
       })
