@@ -1,6 +1,7 @@
 <template>
   <div class="song-list">
     <ul>
+      <!-- 选择item -->
       <li @click="selectItem(song, index)" class="item" v-for="(song, index) in songs">
         <div class="rank" v-show="rank">
           <span :class="getRankCls(index)" v-text="getRankText(index)"></span>
@@ -28,6 +29,7 @@
     },
     methods: {
       selectItem(item, index) {
+        // 向父组件传递
         this.$emit('select', item, index)
       },
       getDesc(song) {

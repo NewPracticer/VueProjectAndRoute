@@ -17,6 +17,7 @@
     <scroll :data="songs" @scroll="scroll"
             :listen-scroll="listenScroll" :probe-type="probeType" class="list" ref="list">
       <div class="song-list-wrapper">
+        <!-- 接收到父组件传递过来的值 -->
         <song-list :songs="songs" :rank="rank" @select="selectItem"></song-list>
       </div>
       <div v-show="!songs.length" class="loading-container">

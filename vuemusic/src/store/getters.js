@@ -1,5 +1,6 @@
 import Song from 'common/js/song'
 
+// 取数据 
 export const singer = state => state.singer
 
 export const playing = state => state.playing
@@ -14,6 +15,7 @@ export const mode = state => state.mode
 
 export const currentIndex = state => state.currentIndex
 
+// 当前的播放的歌
 export const currentSong = (state) => {
   return state.playlist[state.currentIndex] || {}
 }

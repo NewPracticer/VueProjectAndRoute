@@ -1,4 +1,5 @@
 <template>
+  <!--播放页面-->
   <div class="player" v-show="playlist.length>0">
     <transition name="normal"
                 @enter="enter"
@@ -108,6 +109,7 @@
 
 <script type="text/ecmascript-6">
   import { mapGetters, mapMutations, mapActions } from 'vuex'
+  // 引入第三方帧动画包
   import animations from 'create-keyframe-animation'
   import { prefixStyle } from 'common/js/dom'
   import ProgressBar from 'base/progress-bar/progress-bar'
@@ -154,6 +156,7 @@
       percent() {
         return this.currentTime / this.currentSong.duration
       },
+      // 调用vuex的获取
       ...mapGetters([
         'currentIndex',
         'fullScreen',
@@ -428,6 +431,7 @@
         }
         return num
       },
+      // 获取当前的位置并缩放
       _getPosAndScale() {
         const targetWidth = 40
         const paddingLeft = 40

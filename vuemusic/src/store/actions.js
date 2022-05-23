@@ -10,6 +10,7 @@ function findIndex(list, song) {
 }
 
 export const selectPlay = function ({commit, state}, {list, index}) {
+  // 提交action到mutations
   commit(types.SET_SEQUENCE_LIST, list)
   if (state.mode === playMode.random) {
     let randomList = shuffle(list)
