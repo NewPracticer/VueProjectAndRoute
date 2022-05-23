@@ -4,7 +4,6 @@
     <music-list :title="title" :bg-image="bgImage" :songs="songs"></music-list>
   </transition>
 </template>
-
 <script type="text/ecmascript-6">
   import MusicList from 'components/music-list/music-list'
   import { getSingerDetail } from 'api/singer'
@@ -39,6 +38,7 @@
           this.$router.push('/singer')
           return
         }
+        // 获取歌手详情接口报错。404
         getSingerDetail(this.singer.id).then((res) => {
           if (res.code === ERR_OK) {
             processSongsUrl(this._normalizeSongs(res.data.list)).then((songs) => {
@@ -47,6 +47,7 @@
           }
         })
       },
+      // 遍历song的数据
       _normalizeSongs(list) {
         let ret = []
         list.forEach((item) => {
