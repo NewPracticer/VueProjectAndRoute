@@ -55,10 +55,14 @@ export function getSongsUrl(songs) {
         url_mid: urlMid
       }).then((response) => {
         const res = response.data
+        console.log('获取歌曲结果',res)
         if (res.code === ERR_OK) {
           let urlMid = res.url_mid
+          console.log('urlmid: ', urlMid)
           if (urlMid && urlMid.code === ERR_OK) {
             const info = urlMid.data.midurlinfo[0]
+            console.log('info: ',info)
+            // 获取歌曲播放的url地址
             if (info && info.purl) {
               resolve(res)
             } else {

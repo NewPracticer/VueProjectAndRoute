@@ -53,6 +53,7 @@
             <span class="dot" :class="{'active':currentShow==='lyric'}"></span>
           </div>
           <div class="progress-wrapper">
+            <!-- 格式化当前时间 -->
             <span class="time time-l">{{format(currentTime)}}</span>
             <div class="progress-bar-wrapper">
               <progress-bar ref="progressBar" :percent="percent" @percentChange="onProgressBarChange"
@@ -102,6 +103,7 @@
       </div>
     </transition>
     <playlist ref="playlist"></playlist>
+    <!--播放器-->
     <audio ref="audio" @playing="ready" @error="error" @timeupdate="updateTime"
            @ended="end" @pause="paused"></audio>
   </div>
@@ -135,6 +137,7 @@
         currentLyric: null,
         currentLineNum: 0,
         currentShow: 'cd',
+        // 是否是播放状态
         playingLyric: '',
         isPureMusic: false,
         pureMusicLyric: ''
@@ -153,6 +156,7 @@
       disableCls() {
         return this.songReady ? '' : 'disable'
       },
+      // 当前百分比 
       percent() {
         return this.currentTime / this.currentSong.duration
       },
@@ -217,10 +221,12 @@
         this.$refs.cdWrapper.style.transition = ''
         this.$refs.cdWrapper.style[transform] = ''
       },
+      // 切换播放状态
       togglePlaying() {
         if (!this.songReady) {
           return
         }
+        // 切换播放状态
         this.setPlayingState(!this.playing)
         if (this.currentLyric) {
           this.currentLyric.togglePlay()
@@ -242,6 +248,7 @@
           this.currentLyric.seek(0)
         }
       },
+      // 下一条
       next() {
         if (!this.songReady) {
           return
@@ -260,6 +267,7 @@
           }
         }
       },
+      // 上一条 
       prev() {
         if (!this.songReady) {
           return
@@ -272,6 +280,7 @@
           if (index === -1) {
             index = this.playlist.length - 1
           }
+          // 设置当前的索引
           this.setCurrentIndex(index)
           if (!this.playing) {
             this.togglePlaying()
@@ -299,6 +308,7 @@
         clearTimeout(this.timer)
         this.songReady = true
       },
+      // 更新当前进度条时间
       updateTime(e) {
         this.currentTime = e.target.currentTime
       },
@@ -470,6 +480,7 @@
       ])
     },
     watch: {
+      // 监听当前的歌 
       currentSong(newSong, oldSong) {
         if (!newSong.id || !newSong.url || newSong.id === oldSong.id) {
           return
@@ -485,6 +496,7 @@
           this.currentLineNum = 0
         }
         this.$refs.audio.src = newSong.url
+        // 播放器播放
         this.$refs.audio.play()
         // 若歌曲 5s 未播放，则认为超时，修改状态确保可以切换歌曲。
         clearTimeout(this.timer)
