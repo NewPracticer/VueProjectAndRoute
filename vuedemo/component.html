@@ -72,6 +72,8 @@
             </template>
         </childslotscope>
         <div>9、-----动态组件与v-once指令</div>
+        <!-- v-if 指令 用于根据条件控制元素的创建和移除-->
+        <!-- v-show 指令 用于根据条件控制元素的显示和隐藏，对于template无效-->
         <componet :is="type"></componet>
         <child-one v-if="type === 'child-one'"></child-one>
         <child-two v-if="type === 'child-two'"></child-two>
