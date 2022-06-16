@@ -77,6 +77,9 @@
         <componet :is="type"></componet>
         <child-one v-if="type === 'child-one'"></child-one>
         <child-two v-if="type === 'child-two'"></child-two>
+        <!-- v-on 指令-->
+        <!-- 设置事件处理程序后，可以从参数中接收事件对象 -->
+        <!-- 在视图中可以通过$event访问事件对象 -->
         <button @click="handleChangeStateClick"></button>
     </div>
     

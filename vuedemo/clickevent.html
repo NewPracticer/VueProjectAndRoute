@@ -33,11 +33,16 @@
             <input @keydown= "handleKeyDown"/>
         </div>
         <div>---------表单绑定</div>
+        <!-- 用于给input textarea 及select 元素设置双向数据绑定 -->
         <textarea v-model = "value"></textarea>
         {{value}}
         <!-- <checkbox v-model="value"/>
         {{value}} -->
         <!--https://vuejs.bootcss.com/guide/forms.html-->
+        <!-- prevent 修饰符 -->
+        <!-- 用于阻止默认事件行为，相当于event.preventDefault() -->
+        <!-- stop修饰符 -->
+        <!-- 用于阻止事件传播，相当于event.stopPropagetion() -->
     </div>
     
     
